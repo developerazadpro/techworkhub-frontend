@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
+import { useAuth } from "../contexts/AuthContext";
 
 function Jobs() {
+  const { user } = useAuth();  
   const [jobs, setJobs] = useState([]);
+
+  if (!user || user.role !== "technician") {
+    return <p>Only technicians can view available jobs.</p>;
+  }
 
   useEffect(() => {
     async function fetchJobs() {
