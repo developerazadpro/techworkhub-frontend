@@ -3,6 +3,7 @@ import Dashboard from "../pages/Dashboard";
 import Jobs from "../pages/Jobs";
 import CreateJob from "../pages/CreateJob";
 import Login from "../pages/Login";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRoutes() {
     return (
@@ -15,8 +16,8 @@ export default function AppRoutes() {
             </nav>
             <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/jobs" element={<Jobs />} />
-                <Route path="/create-job" element={<CreateJob />} />
+                <Route path="/jobs" element={<ProtectedRoute><Jobs /></ProtectedRoute>} />
+                <Route path="/create-job" element={<ProtectedRoute><CreateJob /></ProtectedRoute>} />
                 <Route path="/login" element={<Login />} />
             </Routes>
         </BrowserRouter>
