@@ -4,7 +4,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 function App() {
   return (
     <AuthProvider>
-      <AppRoutes />
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+         <AppRoutes />
+      </div>      
     </AuthProvider>
   )
 }
