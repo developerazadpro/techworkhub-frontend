@@ -41,16 +41,12 @@ function Jobs() {
               <p><strong>Status:</strong> {job.status}</p>
               <p>
                 <strong>Skills:</strong>{" "}
-                {job.skills?.length > 0
-                    ? job.skills.join(", ")
-                    : "N/A"}
+                {job.skills?.length > 0 ? job.skills.join(", ") : "N/A"}
               </p>
 
               <p>
                 <strong>Recommended Technicians:</strong>{" "}
-                {job.recommended_technicians?.length > 0
-                    ? job.recommended_technicians.join(", ")
-                    : "None"}
+                {job.recommended_technicians?.length > 0 ? job.recommended_technicians.join(", ") : "None"}
               </p>
             </li>
           ))}
