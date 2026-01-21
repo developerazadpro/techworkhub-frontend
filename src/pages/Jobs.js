@@ -22,35 +22,107 @@ function Jobs() {
   }, [user]);
 
   if (!user || user.role !== "technician") {
-    return <p>Only technicians can view available jobs.</p>;
+    return (
+      <div className="bg-white border border-brand-border rounded-2xl p-8">
+        <p className="text-brand-gray">
+          Only technicians can view available jobs.
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div>
-      <h1>Jobs Page</h1>
+    <div className="space-y-10">
+      {/* Header */}
+      <div className="space-y-6 w-full">
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Available Jobs
+        </h1>
+        <p className="text-brand-gray mt-2 max-w-xl">
+          Jobs matched to your skills and availability.
+        </p>
+      </div>
 
+      {/* Jobs list */}
       {jobs.length === 0 ? (
-        <p>No jobs found.</p>
+        <div className="bg-white border border-brand-border rounded-2xl p-12 text-center">
+          <p className="text-brand-gray">No jobs available right now.</p>
+        </div>
       ) : (
-        <ul>
-          {jobs.map(job => (
-            <li key={job.id}>
-              <h2>{job.title}</h2>
-              <p>{job.description}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {jobs.map((job) => (
+            <div
+              key={job.id}
+              className="bg-white border border-brand-border rounded-2xl p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] transition"
+            >
+              {/* Title + status */}
+              <div className="flex items-start justify-between gap-6">
+                <div>
+                  <h2 className="text-lg font-semibold">
+                    {job.title}
+                  </h2>
+                  <p className="text-sm text-brand-gray mt-1">
+                    {job.description}
+                  </p>
+                </div>
 
-              <p><strong>Status:</strong> {job.status}</p>
-              <p>
-                <strong>Skills:</strong>{" "}
-                {job.skills?.length > 0 ? job.skills.join(", ") : "N/A"}
-              </p>
+                <span className="text-xs font-medium px-3 py-1 rounded-full bg-green-50 text-green-700 border border-green-100">
+                  {job.status}
+                </span>
+              </div>
 
-              <p>
-                <strong>Recommended Technicians:</strong>{" "}
-                {job.recommended_technicians?.length > 0 ? job.recommended_technicians.join(", ") : "None"}
-              </p>
-            </li>
+              {/* Skills */}
+              <div className="mt-5">
+                <p className="text-xs font-medium text-brand-muted mb-2">
+                  Required Skills
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {job.skills?.length > 0 ? (
+                    job.skills.map((skill, idx) => (
+                      <span key={idx} className="text-xs px-3 py-1 rounded-full bg-brand-accent text-brand-gray border border-brand-border" >
+                        {skill}
+                      </span>
+                    ))
+                  ) : (
+                    <span className="text-sm text-brand-gray">N/A</span>
+                  )}
+                </div>
+              </div>
+
+              {/* Recommended technicians */}
+              {/* <div className="mt-5">
+                <p className="text-xs font-medium text-brand-muted">
+                  Recommended Technicians
+                </p>
+                <p className="text-sm text-brand-gray mt-1">
+                  {job.recommended_technicians?.length > 0 ? job.recommended_technicians.join(", ") : "None"}
+                </p>
+              </div> */}
+
+              {/* Match indicator (TECHNICIAN-FOCUSED) */}
+              <div className="mt-5 flex items-center gap-2">
+                <span className="text-xs font-medium px-3 py-1 rounded-full
+                                 bg-blue-50 text-blue-700 border border-blue-100">
+                  Good match for your profile
+                </span>
+                <span className="text-xs text-brand-muted">
+                  Based on skills
+                </span>
+              </div>
+
+              {/* Actions */}
+              <div className="mt-6 flex justify-end gap-3">
+                <button className="text-xs px-4 py-2 rounded-lg border border-brand-border text-brand-gray hover:bg-brand-accent transition">
+                  View
+                </button>
+
+                <button className="text-xs px-4 py-2 rounded-lg bg-brand-green text-white hover:opacity-90 transition">
+                  Accept
+                </button>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
