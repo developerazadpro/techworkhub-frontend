@@ -5,16 +5,19 @@ import { useAuth } from "../contexts/AuthContext";
 function Jobs() {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!user || user.role !== "technician") return;
 
     async function fetchJobs() {
       try {
-        const response = await api.get("/api/work-jobs");
-        setJobs(response.data);
+        const res = await api.get("/api/work-jobs");
+        setJobs(res.data.jobs);
       } catch (error) {
         console.error("Error fetching jobs:", error);
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -27,6 +30,18 @@ function Jobs() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <p className="text-brand-gray">
             Only technicians can view available jobs.
+          </p>
+        </div>
+      </div>      
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="space-y-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <p className="text-brand-gray">
+            Loading...
           </p>
         </div>
       </div>      
