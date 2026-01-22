@@ -1,13 +1,16 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { Home, Briefcase, PlusCircle, LogOut } from "lucide-react";
+import { Home, Briefcase, PlusCircle, CheckCircle, LogOut } from "lucide-react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function MainLayout() {
   const location = useLocation();
+  const { user } = useAuth();
 
   const titles = {
     "/": "Dashboard",
     "/jobs": "Jobs",
     "/create-job": "Create Job",
+    "/my-jobs": "My Jobs",
   };
   const pageTitle = titles[location.pathname] || "TechWorkHub";
 
@@ -24,12 +27,19 @@ export default function MainLayout() {
         {/* Navigation */}
         <nav className="px-4 py-6 space-y-1 flex-1">
           <SidebarLink to="/" icon={<Home size={20} />} label="Dashboard" />
-          <SidebarLink to="/jobs" icon={<Briefcase size={20} />} label="Jobs" />
-          <SidebarLink
-            to="/create-job"
-            icon={<PlusCircle size={20} />}
-            label="Create Job"
-          />
+
+          {user?.role === "technician" && (
+            <>
+              <SidebarLink to="/jobs" icon={<Briefcase size={20} />} label="Jobs" />
+              <SidebarLink to="/my-jobs" icon={<CheckCircle  size={20} />} label="My Jobs" />          
+            </>
+          )}
+
+          {user?.role === "client" && (
+            <>
+              <SidebarLink to="/create-job" icon={<PlusCircle size={20} />} label="Create Job" />
+            </>
+          )}
         </nav>
 
         {/* Footer */}
