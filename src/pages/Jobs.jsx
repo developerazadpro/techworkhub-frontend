@@ -6,6 +6,7 @@ function Jobs() {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [acceptingJobId, setAcceptingJobId] = useState(null);
 
   useEffect(() => {
     if (!user || user.role !== "technician") return;
@@ -35,6 +36,32 @@ function Jobs() {
       </div>      
     );
   }
+
+  const handleAcceptJob = async (jobId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to accept this job? Once accepted, it will be assigned to you."
+    );
+    if (!confirmed) return;
+
+    try {
+      setAcceptingJobId(jobId);
+
+      await api.post(`/api/work-jobs/${jobId}/accept`);
+
+      // Remove accepted job from available list
+      setJobs((prev) => prev.filter((job) => job.id !== jobId));
+
+      alert("Job accepted successfully"); // replace with toast later
+    } catch (error) {
+      if (error.response?.status === 409) {
+        alert("This job is no longer available.");
+      } else {
+        alert("Failed to accept job.");
+      }
+    } finally {
+      setAcceptingJobId(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -117,8 +144,16 @@ function Jobs() {
                   View
                 </button>
 
-                <button className="text-xs px-4 py-2 rounded-lg bg-brand-green text-white hover:opacity-90 transition">
-                  Accept
+                <button
+                  onClick={() => handleAcceptJob(job.id)}
+                  disabled={acceptingJobId === job.id}
+                  className={`text-xs px-4 py-2 rounded-lg text-white transition
+                    ${acceptingJobId === job.id
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-brand-green hover:opacity-90"
+                    }`}
+                >
+                  {acceptingJobId === job.id ? "Accepting..." : "Accept"}
                 </button>
               </div>
             </div>
