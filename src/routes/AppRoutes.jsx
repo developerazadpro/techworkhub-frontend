@@ -7,6 +7,7 @@ import CreateJob from "../pages/CreateJob";
 import Login from "../pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import MyJobs from "../pages/MyJobs";
+import ClientMyJobs from "../pages/ClientMyJobs";
 
 export default function AppRoutes() {
   return (
@@ -27,6 +28,7 @@ export default function AppRoutes() {
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/my-jobs" element={<MyJobs />} />
           <Route path="/create-job" element={<CreateJob />} />
+          <Route path="/client/my-jobs" element={<ClientMyJobs />} />
         </Route>
       </Routes>
     </BrowserRouter>

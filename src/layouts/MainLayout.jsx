@@ -11,6 +11,7 @@ export default function MainLayout() {
     "/jobs": "Jobs",
     "/create-job": "Create Job",
     "/my-jobs": "My Jobs",
+    "/client/my-jobs": "My Jobs",
   };
   const pageTitle = titles[location.pathname] || "TechWorkHub";
 
@@ -38,6 +39,7 @@ export default function MainLayout() {
           {user?.role === "client" && (
             <>
               <SidebarLink to="/create-job" icon={<PlusCircle size={20} />} label="Create Job" />
+              <SidebarLink to="/client/my-jobs" icon={<Briefcase size={20} />} label="My Jobs" />
             </>
           )}
         </nav>
