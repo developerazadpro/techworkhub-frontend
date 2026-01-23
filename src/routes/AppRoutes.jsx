@@ -1,14 +1,25 @@
 // AppRoutes.js
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
-import Dashboard from "../pages/Dashboard";
-import Jobs from "../pages/Jobs";
-import CreateJob from "../pages/CreateJob";
-import Login from "../pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
-import MyJobs from "../pages/MyJobs";
-import ClientMyJobs from "../pages/ClientMyJobs";
-import JobDetails from "../pages/JobDetails";
+
+// Auth
+import Login from "../pages/Login";
+
+// Technician pages
+import TechnicianDashboard from "../pages/technician/Dashboard";
+import Jobs from "../pages/technician/Jobs";
+import JobDetails from "../pages/technician/JobDetails";
+import MyJobs from "../pages/technician/MyJobs";
+
+// Client pages
+import ClientDashboard from "../pages/client/Dashboard";
+import CreateJob from "../pages/client/CreateJob";
+import ClientMyJobs from "../pages/client/ClientMyJobs";
+
+// Common
+import Dashboard from "../pages/Dashboard";
+
 
 export default function AppRoutes() {
   return (
@@ -26,13 +37,14 @@ export default function AppRoutes() {
           }
         >
           {/* Technician */}
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/" element={<TechnicianDashboard />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/job/:id" element={<JobDetails />} />
           <Route path="/my-jobs" element={<MyJobs />} />
 
           {/* Client */}
-          <Route path="/create-job" element={<CreateJob />} />
+          <Route path="/client/dashboard" element={<ClientDashboard />} />
+          <Route path="/client/create-job" element={<CreateJob />} />
           <Route path="/client/my-jobs" element={<ClientMyJobs />} />
         </Route>
       </Routes>

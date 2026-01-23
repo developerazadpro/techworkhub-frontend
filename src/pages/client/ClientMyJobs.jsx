@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import api from "../api/api";
-import { useAuth } from "../contexts/AuthContext";
+import api from "../../api/api";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function ClientMyJobs() {
   const { user } = useAuth();

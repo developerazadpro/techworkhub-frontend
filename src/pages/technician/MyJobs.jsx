@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import api from "../api/api";
-import { useAuth } from "../contexts/AuthContext";
-import { capitalize } from "../utils/string";
+import api from "../../api/api";
+import { useAuth } from "../../contexts/AuthContext";
+import { capitalize } from "../../utils/string";
 import { useNavigate } from "react-router-dom";
 
 export default function MyJobs() {

@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import api from "../api/api";
-import { useAuth } from "../contexts/AuthContext";
-import { capitalize } from "../utils/string";
-import { useAcceptJob } from "../hooks/useAcceptJob";
+import api from "../../api/api";
+import { useAuth } from "../../contexts/AuthContext";
+import { capitalize } from "../../utils/string";
+import { useAcceptJob } from "../../hooks/useAcceptJob";
 
 export default function JobDetails() {
   const { id } = useParams();
