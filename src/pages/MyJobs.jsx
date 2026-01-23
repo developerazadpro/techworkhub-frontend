@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 import { useAuth } from "../contexts/AuthContext";
+import { capitalize } from "../utils/string";
+import { useNavigate } from "react-router-dom";
 
 export default function MyJobs() {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user || user.role !== "technician") return;
@@ -84,10 +87,22 @@ export default function MyJobs() {
                 )}
               </div>
 
-              <div className="mt-4 text-xs text-brand-muted">
-                Status: {job.status}
+              {/* Footer */}
+              <div className="mt-6 flex items-center justify-between">
+                <span className="text-xs text-brand-muted">
+                  Status: {capitalize(job.status)}
+                </span>
+
+                <button
+                  onClick={() => navigate(`/job/${job.id}`)}
+                  className="text-xs px-4 py-2 rounded-lg border border-brand-border text-brand-gray hover:bg-brand-accent transition"
+                >
+                  View Details
+                </button>
               </div>
+
             </div>
+            
           ))}
         </div>
       )}

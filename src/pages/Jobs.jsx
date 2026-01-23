@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import api from "../api/api";
 import { useAuth } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { useAcceptJob } from "../hooks/useAcceptJob";
 
 function Jobs() {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [acceptingJobId, setAcceptingJobId] = useState(null);
+  const navigate = useNavigate();
+  const { handleAcceptJob, acceptingJobId } = useAcceptJob();
 
   useEffect(() => {
     if (!user || user.role !== "technician") return;
@@ -36,32 +39,6 @@ function Jobs() {
       </div>      
     );
   }
-
-  const handleAcceptJob = async (jobId) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to accept this job? Once accepted, it will be assigned to you."
-    );
-    if (!confirmed) return;
-
-    try {
-      setAcceptingJobId(jobId);
-
-      await api.post(`/api/work-jobs/${jobId}/accept`);
-
-      // Remove accepted job from available list
-      setJobs((prev) => prev.filter((job) => job.id !== jobId));
-
-      alert("Job accepted successfully"); // replace with toast later
-    } catch (error) {
-      if (error.response?.status === 409) {
-        alert("This job is no longer available.");
-      } else {
-        alert("Failed to accept job.");
-      }
-    } finally {
-      setAcceptingJobId(null);
-    }
-  };
 
   if (loading) {
     return (
@@ -140,20 +117,23 @@ function Jobs() {
 
               {/* Actions */}
               <div className="mt-6 flex justify-end gap-3">
-                <button className="text-xs px-4 py-2 rounded-lg border border-brand-border text-brand-gray hover:bg-brand-accent transition">
+                <button 
+                  onClick={() => navigate(`/job/${job.id}`)} 
+                  className="text-xs px-4 py-2 rounded-lg border border-brand-border text-brand-gray hover:bg-brand-accent transition">
                   View
                 </button>
 
                 <button
                   onClick={() => handleAcceptJob(job.id)}
-                  disabled={acceptingJobId === job.id}
+                  disabled={acceptingJobId === job.id || job.status !== "open"}
                   className={`text-xs px-4 py-2 rounded-lg text-white transition
-                    ${acceptingJobId === job.id
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-brand-green hover:opacity-90"
-                    }`}
+                            ${acceptingJobId === job.id ? "bg-gray-400 cursor-not-allowed" : job.status !== "open" ? "bg-gray-300 cursor-not-allowed" : "bg-brand-green hover:opacity-90"}
+                          `}
+                  title={
+                    job.status !== "open" ? "This job is no longer available" : "Accept this job"
+                  }
                 >
-                  {acceptingJobId === job.id ? "Accepting..." : "Accept"}
+                  {acceptingJobId === job.id ? "Accepting..." : job.status !== "open" ? "Not Available": "Accept"}
                 </button>
               </div>
             </div>
