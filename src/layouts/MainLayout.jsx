@@ -8,11 +8,13 @@ export default function MainLayout() {
 
   const titles = [
     { path: "/", title: "Dashboard" },
+    
     { path: "/jobs", title: "Jobs" },
-    { path: "/create-job", title: "Create Job" },
     { path: "/my-jobs", title: "My Jobs" },
-    { path: "/client/my-jobs", title: "My Jobs" },
     { path: "/job/:id", title: "Job Details" },
+
+    { path: "/client/my-jobs", title: "My Jobs" },
+    { path: "/client/create-job", title: "Create Job" },  
   ];
   const pageTitle = titles.find(({path}) => 
     matchPath({ path, end:true }, 
@@ -41,7 +43,7 @@ export default function MainLayout() {
 
           {user?.role === "client" && (
             <>
-              <SidebarLink to="/create-job" icon={<PlusCircle size={20} />} label="Create Job" />
+              <SidebarLink to="/client/create-job" icon={<PlusCircle size={20} />} label="Create Job" />
               <SidebarLink to="/client/my-jobs" icon={<Briefcase size={20} />} label="My Jobs" />
             </>
           )}

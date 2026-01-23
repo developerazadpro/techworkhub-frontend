@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import api from "../api/api";
-import { useAuth } from "../contexts/AuthContext";
+import api from "../../api/api";
+import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useAcceptJob } from "../hooks/useAcceptJob";
+import { useAcceptJob } from "../../hooks/useAcceptJob";
 
 function Jobs() {
   const { user } = useAuth();

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
-import api from "../api/api";
+import { useAuth } from "../../contexts/AuthContext";
+import api from "../../api/api";
 import { Form } from "react-router-dom";
 
 function CreateJob() {
