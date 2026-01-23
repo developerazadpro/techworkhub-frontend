@@ -8,6 +8,7 @@ import Login from "../pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import MyJobs from "../pages/MyJobs";
 import ClientMyJobs from "../pages/ClientMyJobs";
+import JobDetails from "../pages/JobDetails";
 
 export default function AppRoutes() {
   return (
@@ -24,9 +25,13 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
+          {/* Technician */}
           <Route path="/" element={<Dashboard />} />
           <Route path="/jobs" element={<Jobs />} />
+          <Route path="/job/:id" element={<JobDetails />} />
           <Route path="/my-jobs" element={<MyJobs />} />
+
+          {/* Client */}
           <Route path="/create-job" element={<CreateJob />} />
           <Route path="/client/my-jobs" element={<ClientMyJobs />} />
         </Route>

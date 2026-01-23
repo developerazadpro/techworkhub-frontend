@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, matchPath } from "react-router-dom";
 import { Home, Briefcase, PlusCircle, CheckCircle, LogOut } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -6,14 +6,17 @@ export default function MainLayout() {
   const location = useLocation();
   const { user } = useAuth();
 
-  const titles = {
-    "/": "Dashboard",
-    "/jobs": "Jobs",
-    "/create-job": "Create Job",
-    "/my-jobs": "My Jobs",
-    "/client/my-jobs": "My Jobs",
-  };
-  const pageTitle = titles[location.pathname] || "TechWorkHub";
+  const titles = [
+    { path: "/", title: "Dashboard" },
+    { path: "/jobs", title: "Jobs" },
+    { path: "/create-job", title: "Create Job" },
+    { path: "/my-jobs", title: "My Jobs" },
+    { path: "/client/my-jobs", title: "My Jobs" },
+    { path: "/job/:id", title: "Job Details" },
+  ];
+  const pageTitle = titles.find(({path}) => 
+    matchPath({ path, end:true }, 
+      location.pathname))?.title || "TechWorkHub";
 
   return (
     <div className="flex min-h-screen bg-brand-light text-[#1f2937]">
