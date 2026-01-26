@@ -15,9 +15,14 @@ export function AuthProvider({ children }) {
         }
 
         api.get("/api/user")
-           .then(res => setUser(res.data))
+           .then(res => {
+             setUser(res.data);
+             localStorage.setItem("user", JSON.stringify(res.data));
+           })
            .catch(() => {
+            setUser(null);
             localStorage.removeItem("token");
+            localStorage.removeItem("user");
            })
            .finally(() => setLoading(false));
     }, []);

@@ -118,7 +118,7 @@ function Jobs() {
               {/* Actions */}
               <div className="mt-6 flex justify-end gap-3">
                 <button 
-                  onClick={() => navigate(`/job/${job.id}`)} 
+                  onClick={() => navigate(`/technician/job/${job.id}`)} 
                   className="text-xs px-4 py-2 rounded-lg border border-brand-border text-brand-gray hover:bg-brand-accent transition">
                   View
                 </button>

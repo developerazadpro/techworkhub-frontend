@@ -94,7 +94,7 @@ export default function MyJobs() {
                 </span>
 
                 <button
-                  onClick={() => navigate(`/job/${job.id}`)}
+                  onClick={() => navigate(`/technician/job/${job.id}`)}
                   className="text-xs px-4 py-2 rounded-lg border border-brand-border text-brand-gray hover:bg-brand-accent transition"
                 >
                   View Details
