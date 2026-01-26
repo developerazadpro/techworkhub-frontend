@@ -1,10 +1,12 @@
 import { NavLink, Outlet, useLocation, matchPath } from "react-router-dom";
 import { Home, Briefcase, PlusCircle, CheckCircle, LogOut } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import { useLogout } from "../hooks/useLogout";
 
 export default function MainLayout() {
   const location = useLocation();
   const { user } = useAuth();
+  const logout = useLogout();
 
   const titles = [
     { path: "/", title: "Dashboard" },
@@ -19,6 +21,12 @@ export default function MainLayout() {
   const pageTitle = titles.find(({path}) => 
     matchPath({ path, end:true }, 
       location.pathname))?.title || "TechWorkHub";
+
+  const handleLogout = () => {
+    if (window.confirm("Are you sure you want to logout?")) {
+      logout();
+    }
+  };
 
   return (
     <div className="flex min-h-screen bg-brand-light text-[#1f2937]">
@@ -51,7 +59,7 @@ export default function MainLayout() {
 
         {/* Footer */}
         <div className="px-4 py-4 border-t border-brand-border">
-          <button className="flex items-center gap-3 w-full px-3 py-2.5 text-sm text-red-600 rounded-lg hover:bg-red-50 transition">
+          <button onClick={handleLogout} className="flex items-center gap-3 w-full px-3 py-2.5 text-sm text-red-600 rounded-lg hover:bg-red-50 transition">
             <LogOut size={18} />
             Logout
           </button>
