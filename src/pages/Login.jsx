@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api/api";
+import { useAuth } from "../contexts/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("");  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,10 +18,7 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await api.post("/api/login", {
-        email,
-        password,
-      });
+      const response = await api.post("/api/login", { email, password });
 
       const { token, user } = response.data;
 
@@ -27,14 +26,22 @@ function Login() {
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
+      // Update context
+      setUser(user);
+
+      //localStorage.setItem("userRole", JSON.stringify(user.role));
+
+      navigate("/", { replace: true });
+
       // Redirect based on role
-      if (user.role === "client") {
-        navigate("/client/dashboard");
-      } else if (user.role === "technician") {
-        navigate("/");
-      } else {
-        navigate("/"); // fallback
-      }
+      // if (user.role === "client") {
+      //   navigate("/client", { replace: true });
+      // } else if (user.role === "technician") {
+      //   navigate("/technician", { replace: true });
+      // } else {
+      //   navigate("/", { replace: true }); // fallback
+      //   //navigate("/technician", { replace: true });
+      // }
     } catch (err) {
       setError("Invalid email or password");
     } finally {
