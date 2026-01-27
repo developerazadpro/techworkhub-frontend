@@ -29,19 +29,8 @@ function Login() {
       // Update context
       setUser(user);
 
-      //localStorage.setItem("userRole", JSON.stringify(user.role));
-
       navigate("/", { replace: true });
-
-      // Redirect based on role
-      // if (user.role === "client") {
-      //   navigate("/client", { replace: true });
-      // } else if (user.role === "technician") {
-      //   navigate("/technician", { replace: true });
-      // } else {
-      //   navigate("/", { replace: true }); // fallback
-      //   //navigate("/technician", { replace: true });
-      // }
+      
     } catch (err) {
       setError("Invalid email or password");
     } finally {
