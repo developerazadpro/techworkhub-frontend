@@ -79,10 +79,11 @@ export default function BaseLayout({
   );
 }
 
-function SidebarLink({ to, icon, label }) {
+function SidebarLink({ to, end = false, icon, label }) {
   return (
     <NavLink
       to={to}
+      end={end}
       className={({ isActive }) =>
         `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition ${
           isActive
