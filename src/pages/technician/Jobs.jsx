@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useAcceptJob } from "../../hooks/useAcceptJob";
 
-function Jobs() {
+export default function Jobs() {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -144,4 +144,3 @@ function Jobs() {
   );
 }
 
-export default Jobs;
