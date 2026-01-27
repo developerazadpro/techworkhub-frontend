@@ -5,6 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { capitalize } from "../../utils/string";
 import { useAcceptJob } from "../../hooks/useAcceptJob";
 import JobStatusDropdown from "../../components/jobs/JobStatusDropdown";
+import { JOB_STATUS_TRANSITIONS } from "../../constants/jobStatusTransitions";
 
 export default function JobDetails() {
   const { id } = useParams();
@@ -105,7 +106,7 @@ export default function JobDetails() {
         </section>
 
         {/* Job Status Dropdown */}
-        {user?.role === "technician" && job.status !== "completed" && (
+        {user?.role === "technician" && job.status !== "completed" && JOB_STATUS_TRANSITIONS[job.status]?.length > 0 && (
           <div className="mt-4">
             <p className="text-sm text-brand-muted mb-1">Update Status:</p>
             <JobStatusDropdown job={job} setJob={setJob} />
