@@ -20,7 +20,7 @@ export function useAcceptJob() {
 
       alert("Job accepted successfully");
 
-      navigate("/my-jobs");
+      navigate("/technician/my-jobs");
     } catch (error) {
       if (error.response?.status === 409) {
         alert("This job has already been assigned.");
