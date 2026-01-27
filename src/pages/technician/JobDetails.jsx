@@ -4,6 +4,7 @@ import api from "../../api/api";
 import { useAuth } from "../../contexts/AuthContext";
 import { capitalize } from "../../utils/string";
 import { useAcceptJob } from "../../hooks/useAcceptJob";
+import JobStatusDropdown from "../../components/jobs/JobStatusDropdown";
 
 export default function JobDetails() {
   const { id } = useParams();
@@ -38,7 +39,7 @@ export default function JobDetails() {
     );
   }
 
-  if (loading) {
+  if (!job) {
     return (
       <div className="space-y-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -59,7 +60,7 @@ export default function JobDetails() {
         <div>
           <h1 className="text-3xl font-semibold">{job.title}</h1>
           <p className="text-sm text-brand-muted mt-1">
-            Posted {job.posted_ago} • Client # {job.client.id}
+            Posted {job?.posted_ago} • Client # {job?.client?.id}
           </p>
         </div>
 
@@ -102,6 +103,15 @@ export default function JobDetails() {
             <p className="font-medium">{job.created_at}</p>
           </div>
         </section>
+
+        {/* Job Status Dropdown */}
+        {user?.role === "technician" && job.status !== "completed" && (
+          <div className="mt-4">
+            <p className="text-sm text-brand-muted mb-1">Update Status:</p>
+            <JobStatusDropdown job={job} setJob={setJob} />
+          </div>
+        )}
+
       </div>
 
       {/* RIGHT */}
