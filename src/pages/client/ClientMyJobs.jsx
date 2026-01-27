@@ -65,11 +65,11 @@ export default function ClientMyJobs() {
       {jobs.length === 0 ? (
         <p className="text-brand-gray">You haven’t created any jobs yet.</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           {jobs.map((job) => (
             <div
               key={job.id}
-              className="bg-white border border-brand-border rounded-2xl p-6 shadow-sm"
+              className="bg-white border border-brand-border rounded-2xl lg:p-8 shadow-sm"
             >
               <h3 className="text-lg font-semibold">{job.title}</h3>
               <p className="text-sm text-brand-gray mt-1 line-clamp-3">

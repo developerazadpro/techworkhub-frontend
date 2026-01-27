@@ -70,7 +70,7 @@ export default function BaseLayout({
         </header>
 
         <main className="flex-1 overflow-y-auto">
-          <div className="max-w-[1440px] mx-auto px-10 py-8">
+          <div className="max-w-[1600px] mx-auto px-6 2xl:px-10 py-8">
             <Outlet />
           </div>
         </main>
