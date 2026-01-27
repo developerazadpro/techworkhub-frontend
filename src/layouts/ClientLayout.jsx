@@ -15,7 +15,7 @@ export default function ClientLayout() {
     <BaseLayout
       onLogout={logout}
       sidebarLinks={[
-        { to: "/client", icon: <Home size={20} />, label: "Dashboard" },
+        { to: "/client", end: true, icon: <Home size={20} />, label: "Dashboard" },
         { to: "/client/create-job", icon: <PlusCircle size={20} />, label: "Create Job", },
         { to: "/client/my-jobs", icon: <Briefcase size={20} />, label: "My Jobs", },
         { to: "/client/profile", icon: <User size={20} />, label: "Profile", },

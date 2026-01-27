@@ -15,7 +15,7 @@ export default function TechnicianLayout() {
     <BaseLayout
       onLogout={logout}
       sidebarLinks={[
-        { to: "/technician", icon: <Home size={20} />, label: "Dashboard" },
+        { to: "/technician", end: true, icon: <Home size={20} />, label: "Dashboard" },
         { to: "/technician/jobs", icon: <Briefcase size={20} />, label: "Jobs" },
         { to: "/technician/my-jobs", icon: <CheckCircle size={20} />, label: "My Jobs", },
         { to: "/technician/profile", icon: <User size={20} />, label: "Profile", },
