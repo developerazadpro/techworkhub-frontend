@@ -108,14 +108,26 @@ export default function ClientMyJobs() {
                 {new Date(job.created_at).toLocaleDateString()}
               </div>
 
-              <div className="mt-4 flex justify-end">
+              <div className="mt-4 flex justify-between gap-2">
+                {/* View Button */}
                 <button
-                  onClick={() => navigate(`/client/jobs/${job.id}/edit`)}
-                  className="text-xs px-4 py-2 rounded-lg border border-brand-border hover:bg-brand-accent"
+                  onClick={() => navigate(`/client/job/${job.id}`)}
+                  className="flex-1 px-4 py-2 rounded-lg bg-brand-green text-white text-sm font-medium hover:opacity-90 transition"
                 >
-                  Edit
+                  View
                 </button>
+
+                {/* Edit Button (only if job is open) */}
+                {job.status === "open" && (
+                  <button
+                    onClick={() => navigate(`/client/jobs/${job.id}/edit`)}
+                    className="flex-1 px-4 py-2 rounded-lg border border-brand-border text-sm font-medium text-brand-gray hover:bg-brand-accent hover:text-white transition"
+                  >
+                    Edit
+                  </button>              
+                )}
               </div>
+
             </div>
           ))}
         </div>

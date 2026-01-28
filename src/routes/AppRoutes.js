@@ -18,6 +18,7 @@ import TechnicianProfile from "../pages/technician/Profile";
 // Client pages
 import ClientDashboard from "../pages/client/Dashboard";
 import ClientCreateJob from "../pages/client/CreateJob";
+import ClientJobDetails from "../pages/client/JobDetails";
 import ClientEditJob from "../pages/client/EditJob";
 import ClientMyJobs from "../pages/client/MyJobs";
 import ClientProfile from "../pages/client/Profile";
@@ -48,6 +49,7 @@ export default function AppRoutes() {
           <Route path="/client" element={<ClientLayout />}>
             <Route index element={<ClientDashboard />} />
             <Route path="create-job" element={<ClientCreateJob />} />
+            <Route path="job/:id" element={<ClientJobDetails />} />
             <Route path="jobs/:id/edit" element={<ClientEditJob />} />
             <Route path="my-jobs" element={<ClientMyJobs />} />
             <Route path="profile" element={<ClientProfile />} />
