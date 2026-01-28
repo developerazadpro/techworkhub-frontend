@@ -103,7 +103,7 @@ export default function ClientJobDetails() {
         {isEditable && (
           <div className="mt-6">
             <button
-              onClick={() => navigate(`/client/job/${job.id}/edit`)}
+              onClick={() => navigate(`/client/jobs/${job.id}/edit`)}
               className="px-6 py-3 rounded-xl bg-brand-green text-white text-sm font-medium hover:opacity-90 transition"
             >
               Edit Job

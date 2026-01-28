@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Auth
 import Login from "../pages/Login";
+import Register from "../pages/Register";
 import RootRedirect from "./RootRedirect";
 
 // Layouts 
@@ -32,6 +33,7 @@ export default function AppRoutes() {
 
         {/* Public */}
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         
 
         {/* App layout */}
