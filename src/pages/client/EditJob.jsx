@@ -1,23 +1,45 @@
-import { useState } from "react";
-import { useAuth } from "../../contexts/AuthContext";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import api from "../../api/api";
+import { useAuth } from "../../contexts/AuthContext";
 import { normalizeSkills } from "../../utils/string";
 
-export default function CreateJob() {
+export default function EditJob() {
+  const { id } = useParams();
   const { user } = useAuth();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [skills, setSkills] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
+  // Fetch job
+  useEffect(() => {
+    async function fetchJob() {
+      try {
+        const res = await api.get(`/api/work-jobs/${id}`);
+        const job = res.data.job;
+
+        setTitle(job.title);
+        setDescription(job.description);
+        setSkills(job.skills?.join(", "));
+      } catch {
+        setError("Failed to load job.");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchJob();
+  }, [id]);
+
+    // Guard
   if (!user || user.role !== "client") {
-    return (
-      <div className="space-y-10">
-        <p className="text-brand-gray">Only clients can create jobs.</p>
-      </div>
-    );
+    return <p className="text-brand-gray">Only clients can edit jobs.</p>;
   }
 
   async function handleSubmit(e) {
@@ -25,23 +47,24 @@ export default function CreateJob() {
     setError(null);
     setSuccess(null);
 
-    setLoading(true);
+    setSaving(true);
     try {
-      await api.post("/api/work-jobs", {
+      await api.put(`/api/work-jobs/${id}`, {
         title,
         description,
         skills: normalizeSkills(skills),
       });
 
-      setSuccess("Job created successfully.");
-      setTitle("");
-      setDescription("");
-      setSkills("");
+      setSuccess("Job updated successfully. Matching refreshed.");
     } catch {
-      setError("Failed to create job. Please try again.");
+      setError("Failed to update job. Please try again.");
     } finally {
-      setLoading(false);
+      setSaving(false);
     }
+  }
+
+  if (loading) {
+    return <p className="text-brand-gray">Loading...</p>;
   }
 
   return (
@@ -51,9 +74,9 @@ export default function CreateJob() {
       <div className="lg:col-span-2 space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-semibold">Create a New Job</h1>
+          <h1 className="text-3xl font-semibold">Edit Job</h1>
           <p className="text-sm text-brand-muted mt-1 max-w-xl">
-            Provide clear details so qualified technicians can match your job quickly.
+            Update job details to improve technician matching.
           </p>
         </div>
 
@@ -80,9 +103,8 @@ export default function CreateJob() {
               <input
                 type="text"
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="e.g. Laptop Hardware Repair Technician"
-                className="w-full rounded-xl border border-brand-border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green"
+                onChange={e => setTitle(e.target.value)}
+                className="w-full rounded-xl border border-brand-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand-green"
                 required
               />
             </section>
@@ -93,9 +115,8 @@ export default function CreateJob() {
               <textarea
                 rows={6}
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Describe the issue, expectations, and any important details…"
-                className="w-full rounded-xl border border-brand-border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green"
+                onChange={e => setDescription(e.target.value)}
+                className="w-full rounded-xl border border-brand-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand-green"
                 required
               />
             </section>
@@ -106,9 +127,9 @@ export default function CreateJob() {
               <textarea
                 rows={3}
                 value={skills}
-                onChange={(e) => setSkills(e.target.value)}
+                onChange={e => setSkills(e.target.value)}
                 placeholder="electrician, wiring, switch repair"
-                className="w-full rounded-xl border border-brand-border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green"
+                className="w-full rounded-xl border border-brand-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand-green"
               />
               <p className="text-xs text-brand-muted">
                 Separate skills using commas or new lines.
@@ -119,10 +140,10 @@ export default function CreateJob() {
             <div className="flex justify-end pt-2">
               <button
                 type="submit"
-                disabled={loading}
+                disabled={saving}
                 className="px-6 py-3 rounded-xl bg-brand-green text-white text-sm font-medium hover:opacity-90 disabled:opacity-60 transition"
               >
-                {loading ? "Creating..." : "Create Job"}
+                {saving ? "Updating..." : "Update Job"}
               </button>
             </div>
           </form>
@@ -132,15 +153,14 @@ export default function CreateJob() {
       {/* RIGHT */}
       <aside className="space-y-6">
         <div className="bg-white border border-brand-border rounded-2xl p-6">
-          <h4 className="font-semibold mb-3">Tips for better matches</h4>
+          <h4 className="font-semibold mb-3">Editing tips</h4>
           <ul className="text-sm text-brand-gray space-y-2 list-disc pl-4">
-            <li>Use a clear, specific job title</li>
-            <li>Mention tools or certifications if needed</li>
-            <li>Add multiple skills to improve matching accuracy</li>
+            <li>Changing skills re-runs technician matching</li>
+            <li>Be specific to improve recommendations</li>
+            <li>Keep descriptions clear and concise</li>
           </ul>
         </div>
       </aside>
     </div>
   );
 }
-

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import api from "../../api/api";
 import { useAuth } from "../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function ClientMyJobs() {
   const { user } = useAuth();
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user || user.role !== "client") return;
@@ -104,6 +106,15 @@ export default function ClientMyJobs() {
               <div className="mt-4 text-xs text-brand-muted">
                 Created on{" "}
                 {new Date(job.created_at).toLocaleDateString()}
+              </div>
+
+              <div className="mt-4 flex justify-end">
+                <button
+                  onClick={() => navigate(`/client/jobs/${job.id}/edit`)}
+                  className="text-xs px-4 py-2 rounded-lg border border-brand-border hover:bg-brand-accent"
+                >
+                  Edit
+                </button>
               </div>
             </div>
           ))}
