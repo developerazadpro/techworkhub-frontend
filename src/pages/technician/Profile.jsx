@@ -1,7 +1,44 @@
 import { Mail, User, Briefcase } from "lucide-react";
+import { useEffect, useState } from "react";
+import api from "../../api/api";
+import SkillsSelector from "../../components/SkillsSelector";
 
 export default function TechnicianProfile() {
   const user = JSON.parse(localStorage.getItem("user"));
+  const [skills, setSkills] = useState([]);
+  const [skillIds, setSkillIds] = useState([]);
+  const [isEditingSkills, setIsEditingSkills] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Fetch technician skills
+  useEffect(() => {
+    async function fetchMySkills() {
+      const res = await api.get("/api/technician/skills");
+      setSkills(res.data.skills);
+      setSkillIds(res.data.skills.map((s) => s.id));
+    }
+
+    fetchMySkills();
+  }, []);
+
+  // Save skills handler
+  async function handleSaveSkills() {
+    setLoading(true);
+    try {
+      await api.put("/api/technician/skills", {
+        skill_ids: skillIds,
+      });
+
+      // refresh UI
+      const res = await api.get("/api/technician/skills");
+      setSkills(res.data.skills);
+      setIsEditingSkills(false);
+    } catch {
+      alert("Failed to update skills");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -39,6 +76,73 @@ export default function TechnicianProfile() {
             </div>
           </div>
         </section>
+
+        {/* Skills */}
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold">Skills</h3>
+
+            {!isEditingSkills && (
+              <button
+                onClick={() => setIsEditingSkills(true)}
+                className="text-sm text-brand-green hover:underline"
+              >
+                Edit
+              </button>
+            )}
+          </div>
+
+          {/* VIEW MODE */}
+          {!isEditingSkills && (
+            skills.length === 0 ? (
+              <p className="text-sm text-brand-muted">
+                No skills added yet.
+              </p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {skills.map((skill) => (
+                  <span
+                    key={skill.id}
+                    className="text-xs px-3 py-1 rounded-full bg-brand-accent border border-brand-border"
+                  >
+                    {skill.name}
+                  </span>
+                ))}
+              </div>
+            )
+          )}
+
+          {/* EDIT MODE */}
+          {isEditingSkills && (
+            <div className="bg-white border border-brand-border rounded-2xl p-6 space-y-4">
+              <SkillsSelector
+                value={skillIds}
+                onChange={setSkillIds}
+              />
+
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  onClick={() => {
+                    setIsEditingSkills(false);
+                    setSkillIds(skills.map((s) => s.id)); // reset
+                  }}
+                  className="px-4 py-2 text-sm rounded-lg border border-brand-border"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={handleSaveSkills}
+                  disabled={loading}
+                  className="px-4 py-2 text-sm rounded-lg bg-brand-green text-white disabled:opacity-60"
+                >
+                  {loading ? "Saving..." : "Save"}
+                </button>
+              </div>
+            </div>
+          )}
+        </section>
+
       </div>
 
       {/* RIGHT */}
