@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import api from "../../api/api";
-import { normalizeSkills } from "../../utils/string";
+import SkillsSelector from "../../components/SkillsSelector";
 
 export default function CreateJob() {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [skills, setSkills] = useState("");
+  const [skillIds, setSkillIds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -30,13 +30,13 @@ export default function CreateJob() {
       await api.post("/api/work-jobs", {
         title,
         description,
-        skills: normalizeSkills(skills),
+        skill_ids: skillIds,
       });
 
       setSuccess("Job created successfully.");
       setTitle("");
       setDescription("");
-      setSkills("");
+      setSkillIds("");
     } catch {
       setError("Failed to create job. Please try again.");
     } finally {
@@ -100,19 +100,10 @@ export default function CreateJob() {
               />
             </section>
 
-            {/* Skills */}
+            {/* Skills */}            
             <section className="space-y-2">
               <label className="text-sm font-medium">Required Skills</label>
-              <textarea
-                rows={3}
-                value={skills}
-                onChange={(e) => setSkills(e.target.value)}
-                placeholder="electrician, wiring, switch repair"
-                className="w-full rounded-xl border border-brand-border px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-green"
-              />
-              <p className="text-xs text-brand-muted">
-                Separate skills using commas or new lines.
-              </p>
+              <SkillsSelector value={skillIds} onChange={setSkillIds} />
             </section>
 
             {/* Actions */}

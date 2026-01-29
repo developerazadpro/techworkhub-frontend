@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api/api";
 import { useAuth } from "../../contexts/AuthContext";
-import { normalizeSkills } from "../../utils/string";
+import SkillsSelector from "../../components/SkillsSelector"; 
 
 export default function EditJob() {
   const { id } = useParams();
@@ -10,7 +10,9 @@ export default function EditJob() {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [skills, setSkills] = useState("");
+  
+  const [skillIds, setSkillIds] = useState([]);
+  
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -21,14 +23,22 @@ export default function EditJob() {
   useEffect(() => {
     async function fetchJob() {
       try {
+        // fetch job
         const res = await api.get(`/api/work-jobs/${id}`);
         const job = res.data.job;
 
         setTitle(job.title);
         setDescription(job.description);
-        setSkills(job.skills?.join(", "));
+        
+        // Convert skill names to IDs
+        const skillRes = await api.post("/api/skills/resolve-name-to-id", {
+          skills: job.skills,
+        });
+
+        setSkillIds(skillRes.data.skill_ids);
+
       } catch {
-        setError("Failed to load job.");
+        setError("Failed to load job or skills.");
       } finally {
         setLoading(false);
       }
@@ -52,7 +62,7 @@ export default function EditJob() {
       await api.put(`/api/work-jobs/${id}`, {
         title,
         description,
-        skills: normalizeSkills(skills),
+        skill_ids: skillIds,
       });
 
       setSuccess("Job updated successfully. Matching refreshed.");
@@ -124,15 +134,9 @@ export default function EditJob() {
             {/* Skills */}
             <section className="space-y-2">
               <label className="text-sm font-medium">Required Skills</label>
-              <textarea
-                rows={3}
-                value={skills}
-                onChange={e => setSkills(e.target.value)}
-                placeholder="electrician, wiring, switch repair"
-                className="w-full rounded-xl border border-brand-border px-4 py-3 text-sm focus:ring-2 focus:ring-brand-green"
-              />
+              <SkillsSelector value={skillIds} onChange={setSkillIds} />
               <p className="text-xs text-brand-muted">
-                Separate skills using commas or new lines.
+                Select skills from the list or add custom skills.
               </p>
             </section>
 
