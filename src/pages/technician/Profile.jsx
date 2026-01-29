@@ -78,7 +78,7 @@ export default function TechnicianProfile() {
         </section>
 
         {/* Skills */}
-        <section>
+        <section className="bg-white border border-brand-border rounded-2xl p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold">Skills</h3>
 
