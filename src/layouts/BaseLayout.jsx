@@ -12,12 +12,14 @@ export default function BaseLayout({
     { path: "/technician/jobs", title: "Jobs" },
     { path: "/technician/my-jobs", title: "My Jobs" },
     { path: "/technician/job/:id", title: "Job Details" },
+    { path: "/technician/profile", title: "Profile" },
 
-    { path: "/client/dashboard", title: "Dashboard" },
+    { path: "/client", title: "Dashboard" },
     { path: "/client/create-job", title: "Create Job" },
     { path: "/client/job/:id", title: "Job Details" },
-    { path: "/client/:id/edit", title: "Edit Job" },
+    { path: "/client/jobs/:id/edit", title: "Edit Job" },
     { path: "/client/my-jobs", title: "My Jobs" },
+    { path: "/client/profile", title: "Profile" },
   ];
 
   const pageTitle =

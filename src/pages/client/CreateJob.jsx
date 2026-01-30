@@ -51,7 +51,7 @@ export default function CreateJob() {
       <div className="lg:col-span-2 space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-semibold">Create a New Job</h1>
+          <h2 className="text-3xl font-semibold">Create a New Job</h2>
           <p className="text-sm text-brand-muted mt-1 max-w-xl">
             Provide clear details so qualified technicians can match your job quickly.
           </p>
