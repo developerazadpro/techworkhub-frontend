@@ -84,7 +84,7 @@ export default function EditJob() {
       <div className="lg:col-span-2 space-y-8">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-semibold">Edit Job</h1>
+          <h2 className="text-3xl font-semibold">Edit Job</h2>
           <p className="text-sm text-brand-muted mt-1 max-w-xl">
             Update job details to improve technician matching.
           </p>
