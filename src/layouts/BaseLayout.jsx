@@ -1,5 +1,6 @@
 import { NavLink, Outlet, useLocation, matchPath } from "react-router-dom";
-import { LogOut } from "lucide-react";
+import { LogOut, Bell } from "lucide-react";
+import NotificationsDropdown from '../components/notifications/NotificationsDropdown';
 
 export default function BaseLayout({
   sidebarLinks = [],
@@ -67,10 +68,14 @@ export default function BaseLayout({
 
       {/* Main */}
       <div className="flex-1 flex flex-col">
-        <header className="h-16 bg-white border-b border-brand-border flex items-center px-10">
+        <header className="h-16 bg-white border-b border-brand-border flex items-center justify-between px-10">
+          {/* Left */}
           <h2 className="text-xl font-semibold tracking-tight">
             {pageTitle}
           </h2>
+
+          {/* Notifications */}
+          <NotificationsDropdown />
         </header>
 
         <main className="flex-1 overflow-y-auto">
