@@ -6,6 +6,7 @@ import { capitalize } from "../../utils/string";
 import { useAcceptJob } from "../../hooks/useAcceptJob";
 import JobStatusDropdown from "../../components/jobs/JobStatusDropdown";
 import { JOB_STATUS_TRANSITIONS } from "../../constants/jobStatusTransitions";
+import { formateDate } from "../../utils/string";
 
 export default function JobDetails() {
   const { id } = useParams();
@@ -101,7 +102,7 @@ export default function JobDetails() {
           </div>
           <div>
             <p className="text-brand-muted">Created</p>
-            <p className="font-medium">{job.created_at}</p>
+            <p className="font-medium">{formateDate(job.created_at)}</p>
           </div>
         </section>
 

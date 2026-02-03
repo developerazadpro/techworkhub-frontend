@@ -25,3 +25,7 @@ export function normalizeSkills(input) {
     .map(s => s.trim())
     .filter(Boolean);
 }
+
+export function formateDate(date) {
+  return  date ? new Date(date).toLocaleDateString() : "N/A";  
+}

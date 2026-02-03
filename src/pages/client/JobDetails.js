@@ -2,8 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../api/api";
 import { useAuth } from "../../contexts/AuthContext";
-import { normalizeSkills } from "../../utils/string";
 import { capitalize } from "../../utils/string";
+import { formateDate } from "../../utils/string";
 
 export default function ClientJobDetails() {
   const { id } = useParams();
@@ -82,6 +82,22 @@ export default function ClientJobDetails() {
           </div>
         </section>
 
+        <section className="grid grid-cols-2 gap-4 text-sm">
+          <div>
+            <p className="text-brand-muted">Status</p>
+            <span className={`text-xs px-3 py-1 rounded-full font-medium
+                ${job.status === "open" ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-700"}
+                `}
+            >
+                {capitalize(job.status)}
+            </span>
+          </div>
+          <div>
+            <p className="text-brand-muted">Created</p>
+            <p className="font-medium">{job.created_at}</p>
+          </div>
+        </section>
+
         {/* Recommended Technicians (optional, read-only for client) */}
         {job.recommended_technicians?.length > 0 && (
           <section>
@@ -125,7 +141,7 @@ export default function ClientJobDetails() {
             Created: {new Date(job.created_at).toLocaleDateString()}
           </p>
           <p className="text-sm text-brand-gray">
-            Updated: {new Date(job.updated_at).toLocaleDateString()}
+            Updated: {formateDate(job.updated_at)}
           </p>
         </div>
 
