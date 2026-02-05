@@ -4,7 +4,7 @@ import {
   getJob,
   updateJob,
   resolveSkillNamesToIds,
-} from "../api/jobs";
+} from "../../api/jobs";
 
 export const useJobForm = ({ jobId, mode }) => {
   const [title, setTitle] = useState("");

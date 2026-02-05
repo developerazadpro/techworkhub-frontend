@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { JOB_STATUS_TRANSITIONS } from "../../constants/jobStatusTransitions";
-import { useUpdateJobStatus } from "../../hooks/useUpdateJobStatus";
-import { capitalize } from "../../utils/string";
+import { JOB_STATUS_TRANSITIONS } from "../../../constants/jobStatusTransitions";
+import { useUpdateJobStatus } from "../../../hooks/jobs/useUpdateJobStatus";
+import { capitalize } from "../../../utils/string";
 
 
 export default function JobStatusDropdown({ job, setJob }) {

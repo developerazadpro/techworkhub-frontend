@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { Home, Briefcase, CheckCircle, User } from "lucide-react";
 import BaseLayout from "./BaseLayout";
-import { useLogout } from "../hooks/useLogout";
+import { useLogout } from "../hooks/auth/useLogout";
 
 export default function TechnicianLayout() {
   const user = JSON.parse(localStorage.getItem("user"));

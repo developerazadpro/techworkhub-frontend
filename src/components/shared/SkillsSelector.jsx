@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/api";
+import api from "../../api/api";
 
 export default function SkillsSelector({ value = [], onChange }) {
   const [skills, setSkills] = useState([]);
