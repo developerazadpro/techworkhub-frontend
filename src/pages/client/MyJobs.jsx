@@ -1,6 +1,6 @@
 import { useAuth } from "../../contexts/AuthContext";
-import { useClientJobs } from "../../hooks/useClientJobs";
-import ClientJobCard from "../../components/jobs/ClientJobCard";
+import { useClientJobs } from "../../hooks/jobs/useClientJobs";
+import ClientJobCard from "../../components/client/jobs/ClientJobCard";
 
 export default function ClientMyJobs() {
   const { user } = useAuth();

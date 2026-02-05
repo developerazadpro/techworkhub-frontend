@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useRegister } from "../../hooks/useAuth";
+import { useRegister } from "../../hooks/auth/useAuth";
 
 export default function Register() {
   const { register, loading, error, success } = useRegister();

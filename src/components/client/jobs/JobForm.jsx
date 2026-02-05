@@ -1,4 +1,4 @@
-import SkillsSelector from "../SkillsSelector";
+import SkillsSelector from "../../shared/SkillsSelector";
 
 export default function JobForm({
   title,

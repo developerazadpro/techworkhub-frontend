@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getClientJobs } from "../api/jobs";
+import { getClientJobs } from "../../api/jobs";
 
 export const useClientJobs = (user) => {
   const [jobs, setJobs] = useState([]);

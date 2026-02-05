@@ -1,7 +1,7 @@
 import { Mail, User, Briefcase } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "../../api/api";
-import SkillsSelector from "../../components/SkillsSelector";
+import SkillsSelector from "../../components/shared/SkillsSelector";
 
 export default function TechnicianProfile() {
   const user = JSON.parse(localStorage.getItem("user"));

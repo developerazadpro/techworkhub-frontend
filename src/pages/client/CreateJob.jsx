@@ -1,6 +1,6 @@
 import { useAuth } from "../../contexts/AuthContext";
-import { useJobForm } from "../../hooks/useJobForm";
-import JobForm from "../../components/jobs/JobForm";
+import { useJobForm } from "../../hooks/jobs/useJobForm";
+import JobForm from "../../components/client/jobs/JobForm";
 
 export default function CreateJob() {
   const { user } = useAuth();
