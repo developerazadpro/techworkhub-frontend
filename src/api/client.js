@@ -1,0 +1,23 @@
+import api from "./api";
+
+export const getClientJobs = async () => {
+  const res = await api.get("/api/client/my-jobs");
+  return Array.isArray(res.data.jobs) ? res.data.jobs : [];
+};
+
+export const createJob = async (payload) => {
+  const res = await api.post("/api/work-jobs", payload);
+  return res.data;
+};
+
+export const updateJob = async (id, payload) => {
+  const res = await api.put(`/api/work-jobs/${id}`, payload);
+  return res.data;
+};
+
+export const resolveSkillNamesToIds = async (skills) => {
+  const res = await api.post("/api/skills/resolve-name-to-id", {
+    skills,
+  });
+  return res.data.skill_ids;
+};

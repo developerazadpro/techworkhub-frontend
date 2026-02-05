@@ -1,6 +1,6 @@
 import { capitalize } from "../../../utils/string";
 
-export default function ClientJobDetailsMain({ job, onEdit }) {
+export default function JobDetailsMain({ job, onEdit }) {
   const isEditable = job.status === "open";
 
   return (

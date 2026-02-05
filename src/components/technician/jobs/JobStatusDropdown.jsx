@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { JOB_STATUS_TRANSITIONS } from "../../../constants/jobStatusTransitions";
-import { useUpdateJobStatus } from "../../../hooks/jobs/useUpdateJobStatus";
+import { useUpdateJobStatus } from "../../../hooks/technician/useUpdateJobStatus";
 import { capitalize } from "../../../utils/string";
 
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import api from "../../api/api";
 import { useAuth } from "../../contexts/AuthContext";
 import { capitalize } from "../../utils/string";
-import { useAcceptJob } from "../../hooks/jobs/useAcceptJob";
+import { useAcceptJob } from "../../hooks/technician/useAcceptJob";
 import JobStatusDropdown from "../../components/technician/jobs/JobStatusDropdown";
 import { JOB_STATUS_TRANSITIONS } from "../../constants/jobStatusTransitions";
 import { formateDate } from "../../utils/string";

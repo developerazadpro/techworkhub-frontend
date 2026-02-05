@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { useJobForm } from "../../hooks/jobs/useJobForm";
+import { useJobForm } from "../../hooks/client/useJobForm";
 import JobForm from "../../components/client/jobs/JobForm";
 
 export default function EditJob() {
