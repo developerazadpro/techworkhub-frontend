@@ -1,10 +1,10 @@
 import api from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { acceptJob } from "../../api/technician";
 
 export function useAcceptJob() {
   const navigate = useNavigate();
-  //const [accepting, setAccepting] = useState(false);
   const [acceptingJobId, setAcceptingJobId] = useState(null);
 
   async function handleAcceptJob(jobId) {
@@ -16,7 +16,7 @@ export function useAcceptJob() {
     try {
       setAcceptingJobId(jobId);
 
-      await api.post(`/api/work-jobs/${jobId}/accept`);
+      await acceptJob(jobId);
 
       alert("Job accepted successfully");
 
