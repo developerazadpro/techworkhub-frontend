@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { getJob } from "../../api/jobs";
 import {
   createJob,
-  getJob,
   updateJob,
   resolveSkillNamesToIds,
-} from "../../api/jobs";
+} from "../../api/client";
 
 export const useJobForm = ({ jobId, mode }) => {
   const [title, setTitle] = useState("");

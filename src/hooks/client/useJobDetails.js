@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getJob } from "../../api/jobs";
 
-export const useClientJobDetails = (id, user) => {
+export const useJobDetails = (id, user) => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

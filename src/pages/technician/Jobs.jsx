@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import api from "../../api/api";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useAcceptJob } from "../../hooks/jobs/useAcceptJob";
+import { useAcceptJob } from "../../hooks/technician/useAcceptJob";
 
 export default function Jobs() {
   const { user } = useAuth();

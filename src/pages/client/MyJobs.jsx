@@ -1,10 +1,10 @@
 import { useAuth } from "../../contexts/AuthContext";
-import { useClientJobs } from "../../hooks/jobs/useClientJobs";
-import ClientJobCard from "../../components/client/jobs/ClientJobCard";
+import { useJobs } from "../../hooks/client/useJobs";
+import JobCard from "../../components/client/jobs/JobCard";
 
 export default function ClientMyJobs() {
   const { user } = useAuth();
-  const { jobs, loading } = useClientJobs(user);
+  const { jobs, loading } = useJobs(user);
 
   if (!user || user.role !== "client") {
     return <p className="text-brand-gray">Only clients can view their jobs.</p>;
@@ -30,7 +30,7 @@ export default function ClientMyJobs() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           {jobs.map((job) => (
-            <ClientJobCard key={job.id} job={job} />
+            <JobCard key={job.id} job={job} />
           ))}
         </div>
       )}

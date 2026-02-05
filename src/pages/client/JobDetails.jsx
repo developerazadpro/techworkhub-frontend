@@ -1,15 +1,15 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { useClientJobDetails } from "../../hooks/jobs/useClientJobDetails";
-import ClientJobDetailsMain from "../../components/client/jobs/ClientJobDetailsMain";
-import ClientJobDetailsSidebar from "../../components/client/jobs/ClientJobDetailsSidebar";
+import { useJobDetails } from "../../hooks/client/useJobDetails";
+import JobDetailsMain from "../../components/client/jobs/JobDetailsMain";
+import JobDetailsSidebar from "../../components/client/jobs/JobDetailsSidebar";
 
 export default function ClientJobDetails() {
   const { id } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const { job, loading, error } = useClientJobDetails(id, user);
+  const { job, loading, error } = useJobDetails(id, user);
 
   if (!user || user.role !== "client") {
     return <p className="text-brand-gray">Only clients can view this job.</p>;
@@ -20,11 +20,11 @@ export default function ClientJobDetails() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-      <ClientJobDetailsMain
+      <JobDetailsMain
         job={job}
         onEdit={() => navigate(`/client/jobs/${job.id}/edit`)}
       />
-      <ClientJobDetailsSidebar job={job} error={error} />
+      <JobDetailsSidebar job={job} error={error} />
     </div>
   );
 }
