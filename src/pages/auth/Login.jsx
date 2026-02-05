@@ -1,42 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "../api/api";
-import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useAuth";
 
 function Login() {
-  const navigate = useNavigate();
-  const { setUser } = useAuth();
-
+  const { login, loading, error } = useLogin();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const response = await api.post("/api/login", { email, password });
-
-      const { token, user } = response.data;
-
-      // Store auth info
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-
-      // Update context
-      setUser(user);
-
-      navigate("/", { replace: true });
-      
-    } catch (err) {
-      setError("Invalid email or password");
-    } finally {
-      setLoading(false);
-    }
+    await login(email, password);
   };
 
   return (
@@ -99,7 +72,6 @@ function Login() {
             Register
           </Link>
         </p>
-
       </div>
     </div>
   );
