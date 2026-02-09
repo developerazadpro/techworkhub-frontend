@@ -3,6 +3,6 @@ export function capitalize(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function formateDate(date) {
+export function formatDate(date) {
   return  date ? new Date(date).toLocaleDateString() : "N/A";  
 }
