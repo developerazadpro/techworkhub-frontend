@@ -1,4 +1,4 @@
-import { formateDate } from "../../../utils/string";
+import { formatDate } from "../../../utils/string";
 
 export default function ClientJobDetailsSidebar({ job, error }) {
   return (
@@ -10,7 +10,7 @@ export default function ClientJobDetailsSidebar({ job, error }) {
           Created: {new Date(job.created_at).toLocaleDateString()}
         </p>
         <p className="text-sm text-brand-gray">
-          Updated: {formateDate(job.updated_at)}
+          Updated: {formatDate(job.updated_at)}
         </p>
       </div>
 

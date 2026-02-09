@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { capitalize, formateDate } from "../../utils/string";
+import { capitalize, formatDate } from "../../utils/string";
 import { useAcceptJob } from "../../hooks/technician/useAcceptJob";
 import { useJobDetails } from "../../hooks/technician/useJobDetails";
 import JobStatusDropdown from "../../components/technician/jobs/JobStatusDropdown";
@@ -63,7 +63,7 @@ export default function JobDetails() {
           </div>
           <div>
             <p className="text-brand-muted">Created</p>
-            <p className="font-medium">{formateDate(job.created_at)}</p>
+            <p className="font-medium">{formatDate(job.created_at)}</p>
           </div>
         </section>
 
