@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation, matchPath } from "react-router-dom";
-import { LogOut, Bell } from "lucide-react";
+import { LogOut } from "lucide-react";
 import NotificationsDropdown from '../components/notifications/NotificationsDropdown';
 
 export default function BaseLayout({
