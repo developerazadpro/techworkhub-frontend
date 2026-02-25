@@ -1,4 +1,4 @@
-import { Mail, User, Building2, Briefcase } from "lucide-react";
+import { Mail, User, Building2 } from "lucide-react";
 
 export default function ClientProfile() {
   const user = JSON.parse(localStorage.getItem("user"));
