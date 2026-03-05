@@ -21,10 +21,42 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci 
+        run: npm ci
 
       - name: Run Tests (if present)
-        run: npm test -- -- watchAll=false || true
+        run: npm test -- --watchAll=false || true
 
       - name: Build Project
         run: npm run build
+
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Login to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Create safe branch tag
+        run: echo "BRANCH_TAG=${GITHUB_REF_NAME//\//-}" >> $GITHUB_ENV
+
+      - name: Build Docker Images
+        run: |
+          docker build \
+            -t ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:latest \
+            -t ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:${{ env.BRANCH_TAG }} \
+            -t ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:${{ github.sha }} \
+            .
+
+      - name: Push Docker Images
+        run: |
+          docker push ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:latest
+          docker push ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:${{ env.BRANCH_TAG }}
+          docker push ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:${{ github.sha }}
