@@ -50,6 +50,7 @@ jobs:
       - name: Build Docker Images
         run: |
           docker build \
+            --build-arg REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} \
             -t ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:latest \
             -t ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:${{ env.BRANCH_TAG }} \
             -t ghcr.io/${{ github.repository_owner }}/techworkhub-frontend:${{ github.sha }} \
